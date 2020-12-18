@@ -6,7 +6,7 @@ module Api
       protect_from_forgery with: :null_session
 
       def create
-        review = review.new(review_params)
+        review = Review.new(review_params)
         
         if review.save
           render json: ReviewSerializer.new(review).serialized_json
@@ -16,15 +16,13 @@ module Api
       end
 
       def destroy
-        review = review.find(params[:id])
+        review = Review.find(params[:id])
         
         if review.destroy
           head :no_content
         else
           render json: { error: review.errors.messages }, status: 422
         end
-      end
-
       end
 
       private
